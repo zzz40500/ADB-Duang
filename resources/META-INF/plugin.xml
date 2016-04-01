@@ -1,0 +1,54 @@
+<idea-plugin version="2">
+    <id>com.dim.plugin.adbduang</id>
+    <name>ADB Duang</name>
+
+    <version>0.1</version>
+    <vendor email="wyh405003836@126.com">zzz40500</vendor>
+    <description>
+        <![CDATA[
+Plugin for one key pull data( database,preference ) from device and  push data( database,preference ) to device<br />
+<br />
+For more details, look at the repo on GitHub:<a href="https://github.com/zzz40500/ADB-Duang">https://github.com/zzz40500/ADB-Duang</a>
+      </html>
+      ]]>
+    </description>
+
+    <change-notes>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.android</depends>
+    <actions>
+        <action id="PullPreferenceAction"
+                class="com.dim.action.PullPreferenceAction"
+                text="pull preference from device"
+        >
+            <!--<add-to-group group-id="GenerateGroup" anchor="first"/>-->
+        </action>
+
+        <action id="PullDatabaseAction"
+                class="com.dim.action.PullDatabaseAction"
+                text="pull database from device"
+                description="pull database from device">
+        </action>
+
+        <action id="PushAction"
+                class="com.dim.action.PushAction"
+                text="push to device"
+                description="push to device">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
+
+</idea-plugin>
