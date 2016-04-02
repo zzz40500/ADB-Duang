@@ -61,33 +61,41 @@ public class PullCommand extends Command {
 
         for (int i = 0; i < 3; i++) {
 
-            VirtualFile file = deviceResult.facet.getModule().getModuleFile().getParent();
+            VirtualFile file = deviceResult.anActionEvent.getProject().getBaseDir();
             if (file != null) {
                 VirtualFile child = file.findChild(duangFile);
                 if (child == null) {
                     file.refresh(true, true);
                     child = file.findChild(duangFile);
                 }
+
+
                 if (child != null) {
-                    VirtualFile fileNameFile = child.findChild(localPath);
-
-                    if (fileNameFile == null) {
+                    VirtualFile appFile = child.findChild(deviceResult.facet.getModule().getName());
+                    if (appFile == null) {
                         file.refresh(true, true);
-                        fileNameFile = child.findChild(localPath);
+                        appFile = child.findChild(deviceResult.facet.getModule().getName());
                     }
-                    if (fileNameFile != null) {
-                        println("file   " + fileNameFile.getName());
-                        fileNameFile.refresh(true, true);
-                        VirtualFile targetFile = fileNameFile.findChild(fileName);
-                        if (targetFile != null) {
-                            selectInTargetFile(targetFile);
-                            break;
-                        } else {
-                            if (i == 2) {
-                                selectInTargetFile(child);
+                    if (appFile != null) {
+                        VirtualFile fileNameFile = appFile.findChild(localPath);
+                        if (fileNameFile == null) {
+                            file.refresh(true, true);
+                            fileNameFile = appFile.findChild(localPath);
+                        }
+                        if (fileNameFile != null) {
+                            println("file   " + fileNameFile.getName());
+                            fileNameFile.refresh(true, true);
+                            VirtualFile targetFile = fileNameFile.findChild(fileName);
+                            if (targetFile != null) {
+                                selectInTargetFile(targetFile);
                                 break;
-                            }
+                            } else {
+                                if (i == 2) {
+                                    selectInTargetFile(child);
+                                    break;
+                                }
 
+                            }
                         }
                     }
                 }
@@ -126,8 +134,8 @@ public class PullCommand extends Command {
 
     private File getLocalFile() {
 
-        String parentFile = deviceResult.facet.getModule().getModuleFile().getParent().getPath();
-        File file = new File(parentFile + "/" + duangFile + "/" + localPath);
+        String parentFile = deviceResult.anActionEvent.getProject().getBasePath();
+        File file = new File(parentFile + "/" + duangFile + "/" + deviceResult.facet.getModule().getName() + "/" + localPath);
         if (!file.exists()) {
             file.mkdirs();
         }

@@ -157,7 +157,7 @@ public class MyDeviceChooser implements Disposable {
     setColumnWidth(myDeviceTable, DEVICE_NAME_COLUMN_INDEX, "Samsung Galaxy Nexus Android 4.1 (API 17)");
     setColumnWidth(myDeviceTable, SERIAL_COLUMN_INDEX, "0000-0000-00000");
     setColumnWidth(myDeviceTable, DEVICE_STATE_COLUMN_INDEX, "offline");
-    setColumnWidth(myDeviceTable, COMPATIBILITY_COLUMN_INDEX, "yes");
+//    setColumnWidth(myDeviceTable, COMPATIBILITY_COLUMN_INDEX, "yes");
 
     // Do not recreate columns on every model update - this should help maintain the column sizes set above
     myDeviceTable.setAutoCreateColumnsFromModel(false);
@@ -424,9 +424,10 @@ public class MyDeviceChooser implements Disposable {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-      if (columnIndex == COMPATIBILITY_COLUMN_INDEX) {
-        return LaunchCompatibility.class;
-      } else if (columnIndex == DEVICE_NAME_COLUMN_INDEX) {
+//      if (columnIndex == COMPATIBILITY_COLUMN_INDEX) {
+//        return LaunchCompatibility.class;
+//      } else
+      if (columnIndex == DEVICE_NAME_COLUMN_INDEX) {
         return IDevice.class;
       } else {
         return String.class;

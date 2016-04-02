@@ -6,7 +6,7 @@
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
-Plugin for one key pull data( database,preference ) from device and  push data( database,preference ) to device<br />
+Plugin for one key pull file ( database,preference ) from device and  push file ( database,preference ) to device<br />
 <br />
 For more details, look at the repo on GitHub:<a href="https://github.com/zzz40500/ADB-Duang">https://github.com/zzz40500/ADB-Duang</a>
       </html>
@@ -29,8 +29,7 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
     <actions>
         <action id="PullPreferenceAction"
                 class="com.dim.action.PullPreferenceAction"
-                text="pull preference from device"
-        >
+                text="pull preference from device">
             <!--<add-to-group group-id="GenerateGroup" anchor="first"/>-->
         </action>
 
@@ -44,7 +43,7 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
                 class="com.dim.action.PushAction"
                 text="push to device"
                 description="push to device">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="WeighingNewGroup"/>
         </action>
     </actions>
     <extensions defaultExtensionNs="com.intellij">

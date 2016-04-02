@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 
+import static com.dim.ui.NotificationHelper.error;
 import static com.dim.ui.NotificationHelper.info;
 import static com.dim.utils.Logger.println;
 
@@ -15,6 +16,8 @@ import static com.dim.utils.Logger.println;
  */
 public class PushAction extends BaseAction {
 
+
+    private String parentFileName;
 
     private boolean isDataBase(String parentFileName) {
 
@@ -29,6 +32,49 @@ public class PushAction extends BaseAction {
     }
 
     @Override
+    protected String getAndroidFacetName(AnActionEvent anActionEvent) {
+
+        Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
+        if (o instanceof XmlFileImpl) {
+
+            return((XmlFileImpl) o).getVirtualFile().getParent().getParent().getName();
+
+        } else if (o instanceof PsiFile) {
+            return  parentFileName = ((PsiFile) o).getVirtualFile().getParent().getParent().getName();
+        }
+        return super.getAndroidFacetName(anActionEvent);
+    }
+
+    @Override
+    protected boolean runEnable(AnActionEvent anActionEvent) {
+
+        Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
+        if (o instanceof XmlFileImpl) {
+
+            parentFileName = ((XmlFileImpl) o).getVirtualFile().getParent().getName();
+            if (isPreference(parentFileName)) {
+                return true;
+            } else {
+                error(((XmlFileImpl) o).getVirtualFile().getName() + " is invalid ");
+            }
+
+        } else if (o instanceof PsiFile) {
+
+            parentFileName = ((PsiFile) o).getVirtualFile().getParent().getName();
+            if (isDataBase(parentFileName)) {
+                return true;
+            } else {
+                error(((PsiFile) o).getVirtualFile().getName() + " is invalid ");
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    @Override
     void run(final DeviceResult deviceResult, final AnActionEvent anActionEvent) {
 
 
@@ -37,7 +83,6 @@ public class PushAction extends BaseAction {
             public void run() {
                 Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
                 if (o instanceof XmlFileImpl) {
-                    String parentFileName = ((XmlFileImpl) o).getVirtualFile().getParent().getName();
                     if (isPreference(parentFileName)) {
                         PushCommand pushCommand = new PushCommand(deviceResult, ((PsiFile) o).getVirtualFile().getPath(),
                                 "data/data/" + deviceResult.packageName + "/shared_prefs/");

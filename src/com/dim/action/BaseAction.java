@@ -30,7 +30,14 @@ public abstract class BaseAction extends AnAction {
     public void actionPerformed(final AnActionEvent anActionEvent) {
         final DeviceResult deviceResult = getDevice(anActionEvent);
 
-        if (deviceResult == null || deviceResult.device == null) {
+        if (deviceResult == null) {
+            return;
+        }
+
+        if (deviceResult.facet == null) {
+            error(" no module ");
+
+        } else if (deviceResult.device == null) {
             //没设备
             error(" no device ");
         } else if (IdeSdks.getAndroidSdkPath() == null) {
@@ -38,25 +45,51 @@ public abstract class BaseAction extends AnAction {
             error("android sdk is null ");
 
         } else {
-            run(deviceResult, anActionEvent);
+            if (runEnable(anActionEvent)) {
+                run(deviceResult, anActionEvent);
+            }
         }
 
     }
 
+    protected boolean runEnable(AnActionEvent anActionEvent) {
+        return true;
+    }
+
+    protected String getAndroidFacetName(AnActionEvent anActionEvent) {
+        return null;
+    }
 
     abstract void run(DeviceResult deviceResult, AnActionEvent anActionEvent);
 
-    private static DeviceResult getDevice(AnActionEvent anActionEvent) {
+    private DeviceResult getDevice(AnActionEvent anActionEvent) {
         List<AndroidFacet> facets = getApplicationFacets(anActionEvent.getProject());
         if (!facets.isEmpty()) {
-            AndroidFacet facet;
-            if (facets.size() > 1) {
-                facet = ModuleChooserDialogHelper.showDialogForFacets(anActionEvent.getProject(), facets);
+
+            AndroidFacet facet = null;
+
+            String androidFacetName = getAndroidFacetName(anActionEvent);
+
+            if (androidFacetName != null) {
+                for (AndroidFacet androidFacet : facets) {
+                    if (androidFacet.getModule().getName().equals(androidFacetName)) {
+                        facet = androidFacet;
+                    }
+                }
                 if (facet == null) {
                     return null;
                 }
+
             } else {
-                facet = facets.get(0);
+
+                if (facets.size() > 1) {
+                    facet = ModuleChooserDialogHelper.showDialogForFacets(anActionEvent.getProject(), facets);
+                    if (facet == null) {
+                        return null;
+                    }
+                } else {
+                    facet = facets.get(0);
+                }
             }
             String packageName =facet.getAndroidModuleInfo().getPackage();
 //            String packageName = "com.xingin.xhs";
@@ -75,11 +108,11 @@ public abstract class BaseAction extends AnAction {
                 } else if (devices.length > 1) {
                     return askUserForDevice(anActionEvent, facet, packageName);
                 } else {
-                    return null;
+                    return new DeviceResult(anActionEvent, null, facet, null);
                 }
             }
         }
-        return null;
+        return new DeviceResult(anActionEvent, null, null, null);
     }
 
 

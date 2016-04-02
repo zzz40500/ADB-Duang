@@ -30,7 +30,7 @@ public class ChmodCommand extends Command {
             String command = "su root chmod 777 " + filePath;
             println(command);
             deviceResult.device.executeShellCommand(command
-                    , new ChmodReceiver(), 15L, TimeUnit.SECONDS);
+                    , new ChmodReceiver(), 2L, TimeUnit.SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
         }
