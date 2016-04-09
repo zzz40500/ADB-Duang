@@ -3,17 +3,12 @@ Plugin for one key pull file ( database,preference ) from device and  push file(
 #介绍
 这是一个一键帮你从设备中的数据库和SharePreference 的文件获取到本地,查看,修改,然后再push 到设备中的intellij & as 插件.
 初衷是.
-开发中查看数据库的方式:  
-1. 使用facebook 开源的框架stetho.
-* 使用[SQLScout](http://www.idescout.com/)
-* 使用手机re管理器查看修改.
-* 使用adb命令读取数据库.
 
-第一种方式要在集成在代码中,在web端查看.
-第二种付费.
-第三种要切换视角(从电脑到手机).
-第四种方式比较麻烦,
-我是对这几个方式并不感冒.
+我不喜欢使用facebook的stetho.
+我不喜欢使用[SQLScout](http://www.idescout.com/)
+我不喜欢使用手机re管理器查看或者修改.
+我不喜欢使用adb命令读取数据库.
+
 
 #原理:
 这个类似 adb pull 和 adb push 的可视化界面.内部使用adb 命令去pull 和 push 文件
