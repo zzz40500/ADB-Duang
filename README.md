@@ -56,6 +56,8 @@ Push File
 1. 本地日志记录.
 * 更多的快捷方式.
 * 更正确的权限判断.
+* 导出/data/anr/traces.txt文件
+* 导出trace 文件
 
 
 
