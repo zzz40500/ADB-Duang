@@ -6,7 +6,7 @@
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
-Plugin for one key pull file ( database,preference.ANR info, method tracing info ) from device and  push file ( database,preference ) to device<br />
+(Need Root !!!)Plugin for one key pull file ( database,preference.ANR info, method tracing info ) from device and  push file ( database,preference ) to device<br />
 <br />
 For more details, look at the repo on GitHub:<a href="https://github.com/zzz40500/ADB-Duang">https://github.com/zzz40500/ADB-Duang</a>
       </html>
