@@ -67,7 +67,7 @@ public class PullTraceMethodAction extends BaseAction {
                     });
                 } else {
                     //没有文件
-                    info(deviceResult.facet.getModule().getName() + " without preference");
+                    info(deviceResult.facet.getModule().getName() + " without trace file ");
                 }
             }
         }).start();

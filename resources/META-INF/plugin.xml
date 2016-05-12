@@ -6,7 +6,7 @@
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
-Plugin for one key pull file ( database,preference ) from device and  push file ( database,preference ) to device<br />
+Plugin for one key pull file ( database,preference.ANR info, method tracing info ) from device and  push file ( database,preference ) to device<br />
 <br />
 For more details, look at the repo on GitHub:<a href="https://github.com/zzz40500/ADB-Duang">https://github.com/zzz40500/ADB-Duang</a>
       </html>
@@ -14,7 +14,13 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
     </description>
     fix : push command doesn't work on 6.0
     <change-notes>
-
+        <![CDATA[
+        <b>1.1.0</b>
+        <ul>
+            <li>add command pull ANR info form device</li>
+            <li>add command pull method tracing info form device</li>
+        </ul>
+        ]]>
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
@@ -28,6 +34,12 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.android</depends>
     <actions>
+
+        <action id="QuickPanelAction"
+                class="com.dim.action.QuickPanelAction"
+                text="ADB Duang...">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt A"/>
+        </action>
         <action id="PullPreferenceAction"
                 class="com.dim.action.PullPreferenceAction"
                 text="pull preference from device">
@@ -38,7 +50,7 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
         </action>
         <action id="PullTraceMethodAction"
                 class="com.dim.action.PullTraceMethodAction"
-                text="pull trace  info from device">
+                text="pull method tracing  info from device">
         </action>
 
         <action id="PullDatabaseAction"

@@ -5,6 +5,7 @@ import com.dim.comand.MvCommand;
 import com.dim.comand.PushCommand;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataConstants;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 
@@ -34,8 +35,13 @@ public class PushAction extends BaseAction {
 
 
     @Override
-    protected String getAndroidFacetName(AnActionEvent anActionEvent) {
+    public void update(AnActionEvent e) {
+        super.update(e);
+        e.getPresentation().setVisible(runEnable(e));
+    }
 
+    @Override
+    protected String getAndroidFacetName(AnActionEvent anActionEvent) {
         Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
         if (o instanceof XmlFileImpl) {
 
@@ -56,8 +62,6 @@ public class PushAction extends BaseAction {
             parentFileName = ((XmlFileImpl) o).getVirtualFile().getParent().getName();
             if (isPreference(parentFileName)) {
                 return true;
-            } else {
-                error(((XmlFileImpl) o).getVirtualFile().getName() + " is invalid ");
             }
 
         } else if (o instanceof PsiFile) {
@@ -65,9 +69,6 @@ public class PushAction extends BaseAction {
             parentFileName = ((PsiFile) o).getVirtualFile().getParent().getName();
             if (isDataBase(parentFileName)) {
                 return true;
-            } else {
-                error(((PsiFile) o).getVirtualFile().getName() + " is invalid ");
-
             }
 
         }
@@ -105,7 +106,7 @@ public class PushAction extends BaseAction {
                                     info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
                                 }
                             } else {
-                                error("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+                                info("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
                             }
 
                         }
@@ -137,7 +138,7 @@ public class PushAction extends BaseAction {
                                     info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
                                 }
                             } else {
-                                error("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+                                info("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
                             }
 
                         }
