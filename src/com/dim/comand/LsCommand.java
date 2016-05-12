@@ -54,14 +54,15 @@ public class LsCommand extends Command<List<String>> {
                 if (line != null && line.length() > 0) {
                     if (line.contains("No such file or directory")) {
                         break;
-                    }else if(line.contains("failed")){
+                    } else if (line.contains("failed")) {
                         break;
 
                     }
+                    println("LsCommand line : " + line);
+
                     fileList.add(line);
 
                 }
-//                println("LsCommand line : " + line);
             }
         }
 

@@ -31,7 +31,14 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
         <action id="PullPreferenceAction"
                 class="com.dim.action.PullPreferenceAction"
                 text="pull preference from device">
-            <!--<add-to-group group-id="GenerateGroup" anchor="first"/>-->
+        </action>
+        <action id="PullAnrAction"
+                class="com.dim.action.PullAnrAction"
+                text="pull ANR info from device">
+        </action>
+        <action id="PullTraceMethodAction"
+                class="com.dim.action.PullTraceMethodAction"
+                text="pull trace  info from device">
         </action>
 
         <action id="PullDatabaseAction"

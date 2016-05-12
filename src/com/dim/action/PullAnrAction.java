@@ -26,42 +26,13 @@ public class PullAnrAction extends BaseAction {
             @Override
             public void run() {
                 //数据库路径
-                final String dataPath = "/data/data/" + deviceResult.packageName + "/" + "databases";
-                ChmodCommand chmodCommand = new ChmodCommand(deviceResult, dataPath);
-                //修改data 的权限
-                chmodCommand.run();
-                // 数据库列表
-                LsCommand ls = new LsCommand(deviceResult, dataPath);
-                ls.run();
-                final List<String> list = ls.getResult();
-                //todo 选择要pull 的文件
-                if (list.size() > 0) {
-                    UIUtil.invokeLaterIfNeeded(new Runnable() {
-                        public void run() {
-                            ChooserListFileDialog chooserListFileDialog = new ChooserListFileDialog(getEventProject(deviceResult.anActionEvent), list);
-                            chooserListFileDialog.show();
-                            final String file = chooserListFileDialog.getSelectedFile();
-                            if (file != null && file.length() > 0) {
-                                //这里的异步,防止你的数据库太大
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        PullCommand pullCommand = new PullCommand(deviceResult, dataPath, file, "databases");
-                                        boolean run = pullCommand.run();
-                                        if (run) {
-                                            info("pull " + file + " success ! ");
-                                        } else {
-                                            info("pull " + file + " failed ! ");
-                                        }
-                                    }
-                                }).start();
-                            }
-                        }
-                    });
-
+                final String dataPath = "/data/anr/";
+                PullCommand pullCommand = new PullCommand(deviceResult, dataPath, "traces.txt", "anr");
+                boolean run = pullCommand.run();
+                if (run) {
+                    info("pull /data/anr/traces.txt success ! ");
                 } else {
-                    //没有文件
-                    info(deviceResult.facet.getModule().getName() + " without database");
+                    info("pull /data/anr/traces.txt failed ! ");
                 }
 
             }
