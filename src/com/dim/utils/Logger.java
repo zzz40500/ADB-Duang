@@ -1,6 +1,8 @@
 package com.dim.utils;
 
 
+import com.dim.ui.NotificationHelper;
+
 /**
  * Created by dim on 16/4/1.
  */

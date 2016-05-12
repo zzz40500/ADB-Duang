@@ -43,7 +43,7 @@ public class PullCommand extends Command {
         //pull 出来
         ChmodCommand chmodCommand = new ChmodCommand(deviceResult, originPath + "/" + fileName);
         chmodCommand.run();
-        String command = IdeSdks.getAndroidSdkPath().getPath() + "/platform-tools/adb   -s" + deviceResult.device.getSerialNumber() + " pull -p   " + originPath + "/" + fileName + " " + getLocalFile().getPath();
+        String command = IdeSdks.getAndroidSdkPath().getPath() + "/platform-tools/adb   -s " + deviceResult.device.getSerialNumber() + " pull -p   " + originPath + "/" + fileName + " " + getLocalFile().getPath();
         println(command);
         String result = executeCommand(command);
         println(result);

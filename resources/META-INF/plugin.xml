@@ -2,7 +2,7 @@
     <id>com.dim.plugin.adbduang</id>
     <name>ADB Duang</name>
 
-    <version>0.1</version>
+    <version>0.2</version>
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
@@ -12,8 +12,9 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
       </html>
       ]]>
     </description>
-
+    fix : push command doesn't work on 6.0
     <change-notes>
+
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

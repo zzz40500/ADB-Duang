@@ -1,6 +1,7 @@
 package com.dim.action;
 
 import com.dim.DeviceResult;
+import com.dim.comand.MvCommand;
 import com.dim.comand.PushCommand;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataConstants;
@@ -31,16 +32,17 @@ public class PushAction extends BaseAction {
         return parentFileName.equals("shared_prefs");
     }
 
+
     @Override
     protected String getAndroidFacetName(AnActionEvent anActionEvent) {
 
         Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
         if (o instanceof XmlFileImpl) {
 
-            return((XmlFileImpl) o).getVirtualFile().getParent().getParent().getName();
+            return ((XmlFileImpl) o).getVirtualFile().getParent().getParent().getName();
 
         } else if (o instanceof PsiFile) {
-            return  parentFileName = ((PsiFile) o).getVirtualFile().getParent().getParent().getName();
+            return parentFileName = ((PsiFile) o).getVirtualFile().getParent().getParent().getName();
         }
         return super.getAndroidFacetName(anActionEvent);
     }
@@ -90,7 +92,21 @@ public class PushAction extends BaseAction {
                         if (run) {
                             info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
                         } else {
-                            info("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+                            String name = ((PsiFile) o).getVirtualFile().getName();
+
+                            PushCommand pushSdcardCommand = new PushCommand(deviceResult, ((PsiFile) o).getVirtualFile().getPath(),
+                                    "/sdcard/ ");
+                            boolean result = pushSdcardCommand.run();
+                            if (result) {
+
+                                MvCommand mvCommand=new MvCommand(deviceResult,name,"data/data/" + deviceResult.packageName + "/shared_prefs/");
+
+                                if(mvCommand.run()){
+                                    info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
+                                }
+                            } else {
+                                error("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+                            }
 
                         }
 
@@ -107,7 +123,22 @@ public class PushAction extends BaseAction {
                         if (run) {
                             info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
                         } else {
-                            info("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+
+                            String name = ((PsiFile) o).getVirtualFile().getName();
+
+                            PushCommand pushSdcardCommand = new PushCommand(deviceResult, ((PsiFile) o).getVirtualFile().getPath(),
+                                    "/sdcard/ ");
+                            boolean result = pushSdcardCommand.run();
+                            if (result) {
+
+                                MvCommand mvCommand=new MvCommand(deviceResult,name,"data/data/" + deviceResult.packageName + "/databases/");
+
+                                if(mvCommand.run()){
+                                    info("push " + ((PsiFile) o).getVirtualFile().getName() + " success !");
+                                }
+                            } else {
+                                error("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
+                            }
 
                         }
                     }

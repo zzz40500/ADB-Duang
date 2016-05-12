@@ -26,8 +26,7 @@ public class PushCommand extends Command {
     @Override
     public boolean run() {
 
-
-        String command = IdeSdks.getAndroidSdkPath().getPath() + "/platform-tools/adb -s" + deviceResult.device.getSerialNumber() + " push  " + localFilePath + " " + remoteFilePath;
+        String command = IdeSdks.getAndroidSdkPath().getPath() + "/platform-tools/adb -s " + deviceResult.device.getSerialNumber() + " push  " + localFilePath + " " + remoteFilePath;
         println(command);
         String result = executeCommand(command);
         println(result);

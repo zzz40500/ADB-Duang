@@ -17,7 +17,8 @@ public class DeviceResult {
     public DeviceResult(AnActionEvent anActionEvent, IDevice device, AndroidFacet facet, String packageName) {
         this.device = device;
         this.facet = facet;
-        this.packageName = packageName;
+//        this.packageName = packageName;
+        this.packageName = "com.xingin.xhs";
         this.anActionEvent = anActionEvent;
     }
 }
