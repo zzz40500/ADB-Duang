@@ -6,8 +6,12 @@ import com.dim.comand.PushCommand;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataConstants;
 import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
+import org.jetbrains.annotations.NotNull;
 
 import static com.dim.ui.NotificationHelper.error;
 import static com.dim.ui.NotificationHelper.info;
@@ -73,10 +77,12 @@ public class PushAction extends BaseAction {
     @Override
     void run(final DeviceResult deviceResult, final AnActionEvent anActionEvent) {
 
+        ProgressManager.getInstance().run(new Task.Backgroundable(deviceResult.anActionEvent.getProject(), "PushAction") {
 
-        new Thread(new Runnable() {
+
             @Override
-            public void run() {
+            public void run(@NotNull ProgressIndicator progressIndicator) {
+                progressIndicator.setIndeterminate(true);
                 Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
                 if (o instanceof XmlFileImpl) {
                     if (isPreference(parentFileName)) {
@@ -135,7 +141,8 @@ public class PushAction extends BaseAction {
                     }
                 }
             }
-        }).start();
+        });
+
 
 
     }

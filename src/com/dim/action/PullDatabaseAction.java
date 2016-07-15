@@ -6,7 +6,11 @@ import com.dim.comand.LsCommand;
 import com.dim.comand.PullCommand;
 import com.dim.ui.ChooserListFileDialog;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.util.ui.UIUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,9 +27,11 @@ public class PullDatabaseAction extends BaseAction {
     void run(final DeviceResult deviceResult, AnActionEvent anActionEvent) {
 
         //异步获取, 因为adb 获取权限是一个同步操作.如果手机长时间设置允许,idea 将一直阻塞.
-        new Thread(new Runnable() {
+        ProgressManager.getInstance().run(new Task.Backgroundable(deviceResult.anActionEvent.getProject(), "PullDatabaseAction") {
+
             @Override
-            public void run() {
+            public void run(@NotNull final ProgressIndicator progressIndicator) {
+                progressIndicator.setIndeterminate(true);
                 //数据库路径
                 final String dataPath = "/data/data/" + deviceResult.packageName + "/" + "databases";
                 ChmodCommand chmodCommand = new ChmodCommand(deviceResult, dataPath);
@@ -64,9 +70,11 @@ public class PullDatabaseAction extends BaseAction {
                     //没有文件
                     info(deviceResult.facet.getModule().getName() + " without database");
                 }
-
             }
-        }).start();
+        });
+
+
+
 
 
     }

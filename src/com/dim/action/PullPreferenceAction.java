@@ -6,7 +6,11 @@ import com.dim.comand.LsCommand;
 import com.dim.comand.PullCommand;
 import com.dim.ui.ChooserListFileDialog;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.util.ui.UIUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -22,9 +26,12 @@ public class PullPreferenceAction extends BaseAction {
     @Override
     void run(final DeviceResult deviceResult, AnActionEvent anActionEvent) {
 
-        new Thread(new Runnable() {
+        ProgressManager.getInstance().run(new Task.Backgroundable(deviceResult.anActionEvent.getProject(), "PullPreferenceAction") {
+
             @Override
-            public void run() {
+            public void run(@NotNull final ProgressIndicator progressIndicator) {
+                progressIndicator.setIndeterminate(true);
+
                 //数据库路径
                 final String dataPath = "/data/data/" + deviceResult.packageName + "/" + "shared_prefs";
                 ChmodCommand chmodCommand = new ChmodCommand(deviceResult, dataPath);
@@ -40,24 +47,24 @@ public class PullPreferenceAction extends BaseAction {
                     UIUtil.invokeLaterIfNeeded(new Runnable() {
                         public void run() {
 
-                                ChooserListFileDialog chooserListFileDialog = new ChooserListFileDialog(getEventProject(deviceResult.anActionEvent), list);
-                                chooserListFileDialog.show();
-                                final String file = chooserListFileDialog.getSelectedFile();
+                            ChooserListFileDialog chooserListFileDialog = new ChooserListFileDialog(getEventProject(deviceResult.anActionEvent), list);
+                            chooserListFileDialog.show();
+                            final String file = chooserListFileDialog.getSelectedFile();
 
-                                if (file != null && file.length() > 0) {
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            PullCommand pullCommand = new PullCommand(deviceResult, dataPath, file, "shared_prefs");
-                                            boolean run = pullCommand.run();
-                                            if (run) {
-                                                info("pull " + file + " success !");
-                                            } else {
-                                                info("pull " + file + " failed !");
-                                            }
+                            if (file != null && file.length() > 0) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        PullCommand pullCommand = new PullCommand(deviceResult, dataPath, file, "shared_prefs");
+                                        boolean run = pullCommand.run();
+                                        if (run) {
+                                            info("pull " + file + " success !");
+                                        } else {
+                                            info("pull " + file + " failed !");
                                         }
-                                    }).start();
-                                }
+                                    }
+                                }).start();
+                            }
                         }
                     });
                 } else {
@@ -65,7 +72,7 @@ public class PullPreferenceAction extends BaseAction {
                     info(deviceResult.facet.getModule().getName() + " without preference");
                 }
             }
-        }).start();
+        });
 
     }
 }
