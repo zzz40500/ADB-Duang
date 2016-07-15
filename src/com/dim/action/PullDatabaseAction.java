@@ -22,9 +22,6 @@ public class PullDatabaseAction extends BaseAction {
     @Override
     void run(final DeviceResult deviceResult, AnActionEvent anActionEvent) {
 
-
-
-
         //异步获取, 因为adb 获取权限是一个同步操作.如果手机长时间设置允许,idea 将一直阻塞.
         new Thread(new Runnable() {
             @Override

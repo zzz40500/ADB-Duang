@@ -14,17 +14,15 @@ public class QuickPanelAction extends QuickSwitchSchemeAction {
 
     @Override
     protected void fillActions(Project project, @NotNull DefaultActionGroup defaultActionGroup, @NotNull DataContext dataContext) {
-        Logger.println("-------------");
 
         if (project == null) {
             return;
         }
-
-
-        addAction("PullDatabaseAction", defaultActionGroup);
-        addAction("PullPreferenceAction", defaultActionGroup);
-        addAction("PullAnrAction", defaultActionGroup);
-        addAction("PullTraceMethodAction", defaultActionGroup);
+        addAction("com.dim.action.PullDatabaseAction", defaultActionGroup);
+        addAction("com.dim.action.PullPreferenceAction", defaultActionGroup);
+        addAction("com.dim.action.PullAnrAction", defaultActionGroup);
+        addAction("com.dim.action.PullTraceMethodAction", defaultActionGroup);
+        addAction("com.dim.action.PushAction", defaultActionGroup);
     }
 
     protected boolean isEnabled() {
@@ -33,8 +31,6 @@ public class QuickPanelAction extends QuickSwitchSchemeAction {
 
     private void addAction(final String actionId, final DefaultActionGroup toGroup) {
         final AnAction action = ActionManager.getInstance().getAction(actionId);
-
-        // add action to group if it is available
         if (action != null) {
             toGroup.add(action);
         }

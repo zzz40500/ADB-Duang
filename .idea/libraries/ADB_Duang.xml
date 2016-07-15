@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ADB-Duang">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ADB-Duang.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

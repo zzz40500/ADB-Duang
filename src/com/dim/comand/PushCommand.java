@@ -5,6 +5,9 @@ import com.android.tools.idea.welcome.install.AndroidSdk;
 import com.dim.DeviceResult;
 import com.intellij.ide.util.PropertiesComponent;
 
+import java.io.File;
+import java.util.List;
+
 import static com.dim.utils.Logger.println;
 
 
@@ -30,9 +33,16 @@ public class PushCommand extends Command {
         println(command);
         String result = executeCommand(command);
         println(result);
-        if (result.contains("failed") || result.contains("error") || result.contains(" no ")) {
-            return false;
+        ChmodCommand chmodCommand = new ChmodCommand(deviceResult, remoteFilePath);
+        //修改data 的权限
+        chmodCommand.run();
+        LsCommand lsCommand = new LsCommand(deviceResult, remoteFilePath);
+        lsCommand.run();
+        List<String> result1 = lsCommand.getResult();
+        if (result1.contains(new File(localFilePath).getName())) {
+            return true;
         }
-        return true;
+
+        return false;
     }
 }

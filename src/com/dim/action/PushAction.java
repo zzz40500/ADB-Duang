@@ -22,17 +22,12 @@ public class PushAction extends BaseAction {
     private String parentFileName;
 
     private boolean isDataBase(String parentFileName) {
-
-
         return parentFileName.equals("databases");
     }
 
     private boolean isPreference(String parentFileName) {
-
-
         return parentFileName.equals("shared_prefs");
     }
-
 
     @Override
     public void update(AnActionEvent e) {
@@ -58,14 +53,12 @@ public class PushAction extends BaseAction {
 
         Object o = anActionEvent.getDataContext().getData(DataConstants.PSI_FILE);
         if (o instanceof XmlFileImpl) {
-
             parentFileName = ((XmlFileImpl) o).getVirtualFile().getParent().getName();
             if (isPreference(parentFileName)) {
                 return true;
             }
 
         } else if (o instanceof PsiFile) {
-
             parentFileName = ((PsiFile) o).getVirtualFile().getParent().getName();
             if (isDataBase(parentFileName)) {
                 return true;
@@ -108,11 +101,8 @@ public class PushAction extends BaseAction {
                             } else {
                                 info("push " + ((PsiFile) o).getVirtualFile().getName() + " failed !");
                             }
-
                         }
-
                     }
-
 
                 } else if (o instanceof PsiFile) {
 

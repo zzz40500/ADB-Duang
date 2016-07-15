@@ -47,13 +47,18 @@ public class PullCommand extends Command {
         println(command);
         String result = executeCommand(command);
         println(result);
-        if (result.contains("(100%)")) {
+        if (isSuccess(getLocalFile().getPath() + "/" + fileName)) {
+
             scrollToTargetSource();
             return true;
         }
 
         return false;
 
+    }
+
+    private boolean isSuccess(String s) {
+        return new File(s).exists();
     }
 
     private void scrollToTargetSource() {

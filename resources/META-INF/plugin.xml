@@ -1,8 +1,7 @@
 <idea-plugin version="2">
     <id>com.dim.plugin.adbduang</id>
     <name>ADB Duang</name>
-
-    <version>0.2</version>
+    <version>0.3</version>
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
@@ -19,6 +18,12 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
             <li>add command pull ANR info form device</li>
             <li>add command pull method tracing info form device</li>
         </ul>
+           <b>0.3</b>
+        <ul>
+            <li> fix bug</li>
+            <li>support the simulator</li>
+        </ul>
+
         ]]>
     </change-notes>
 
@@ -34,35 +39,35 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
     <depends>org.jetbrains.android</depends>
     <actions>
 
-        <action id="QuickPanelAction"
+        <action id="com.dim.action.QuickPanelAction"
                 class="com.dim.action.QuickPanelAction"
                 text="ADB Duang...">
             <keyboard-shortcut keymap="$default" first-keystroke="alt A"/>
         </action>
-        <action id="PullPreferenceAction"
+        <action id="com.dim.action.PullPreferenceAction"
                 class="com.dim.action.PullPreferenceAction"
                 text="pull preference from device">
         </action>
-        <action id="PullAnrAction"
+        <action id="com.dim.action.PullAnrAction"
                 class="com.dim.action.PullAnrAction"
                 text="pull ANR info from device">
         </action>
-        <action id="PullTraceMethodAction"
+        <action id="com.dim.action.PullTraceMethodAction"
                 class="com.dim.action.PullTraceMethodAction"
                 text="pull method tracing  info from device">
         </action>
 
-        <action id="PullDatabaseAction"
+        <action id="com.dim.action.PullDatabaseAction"
                 class="com.dim.action.PullDatabaseAction"
                 text="pull database from device"
                 description="pull database from device">
         </action>
 
-        <action id="PushAction"
+        <action id="com.dim.action.PushAction"
                 class="com.dim.action.PushAction"
-                text="push to device"
-                description="push to device">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="WeighingNewGroup"/>
+                text="push file to device"
+                description="push file to device">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
