@@ -12,51 +12,47 @@ import static com.dim.utils.Logger.println;
  * <p>
  * Created by dim on 16/3/31.
  */
-public class MvCommand extends Command {
+public class MvCommand
+	extends Command {
+	private final DeviceResult deviceResult;
+	private String sdcardName;
+	private final String filePath;
 
+	public MvCommand(DeviceResult deviceResult, String sdcardName, String filePath) {
+		this.deviceResult = deviceResult;
+		this.sdcardName = sdcardName;
+		this.filePath = filePath;
+	}
 
-    private final DeviceResult deviceResult;
-    private String sdcardName;
-    private final String filePath;
+	@Override
+	public boolean run() {
+		try {
+			String command = "su root  mv  /sdcard/" + sdcardName + " " + filePath;
+			println(command);
+			deviceResult.device.executeShellCommand(command , new Receiver(), 2L, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
-    public MvCommand(DeviceResult deviceResult, String sdcardName, String filePath) {
-        this.deviceResult = deviceResult;
-        this.sdcardName = sdcardName;
-        this.filePath = filePath;
-    }
+	/**
+	 * Created by dim on 16/3/31.
+	 */
+	public class Receiver
+		extends MultiLineReceiver {
 
-    @Override
-    public boolean run() {
-        try {
-            String command = "su root  mv  /sdcard/" + sdcardName + " " + filePath;
-            println(command);
-            deviceResult.device.executeShellCommand(command
-                    , new ChmodReceiver(), 2L, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+		@Override
+		public void processNewLines(String[] lines) {
+			for (String line : lines) {
+				println("Receiver : " + line);
+			}
+		}
 
-
-    /**
-     * Created by dim on 16/3/31.
-     */
-    public class ChmodReceiver extends MultiLineReceiver {
-
-        @Override
-        public void processNewLines(String[] lines) {
-            for (String line : lines) {
-                println("ChmodReceiver : " + line);
-            }
-
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-    }
-
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+	}
 }

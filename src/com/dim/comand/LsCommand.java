@@ -13,62 +13,64 @@ import static com.dim.utils.Logger.println;
  * ls 命令
  * Created by dim on 16/3/31.
  */
-public class LsCommand extends Command<List<String>> {
+public class LsCommand
+	extends Command<List<String>> {
+	private final DeviceResult deviceResult;
+	private final String filePath;
+	private String filePartten;
+	private List<String> fileList = new ArrayList<String>();
 
+	public LsCommand(DeviceResult deviceResult, String filePath) {
+		this(deviceResult, filePath, "");
+	}
 
-    private final DeviceResult deviceResult;
-    private final String filePath;
-    private List<String> fileList = new ArrayList<String>();
+	public LsCommand(DeviceResult deviceResult, String filePath, String filePartten) {
+		this.deviceResult = deviceResult;
+		this.filePath = filePath;
+		this.filePartten = filePartten;
+	}
 
+	@Override
+	public boolean run() {
+		try {
+			String command = "cd  " + filePath + "\n ls " + filePartten;
+			println(command);
+			deviceResult.device.executeShellCommand(command, new LsReceiver(), 15L, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
-    public LsCommand(DeviceResult deviceResult, String filePath) {
-        this.deviceResult = deviceResult;
-        this.filePath = filePath;
-    }
+	@Override
+	public List<String> getResult() {
+		return fileList;
+	}
 
-    @Override
-    public boolean run() {
+	class LsReceiver
+		extends MultiLineReceiver {
 
-        try {
-            String command = "cd  " + filePath + "\n ls";
-            println(command);
-            deviceResult.device.executeShellCommand(command
-                    , new LsReceiver(), 15L, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+		@Override
+		public void processNewLines(String[] lines) {
+			for (String line : lines) {
+				if (line != null && line.length() > 0) {
+					if (line.contains("No such file or directory")) {
+						break;
+					} else if (line.contains("failed")) {
+						break;
 
-    @Override
-    public List<String> getResult() {
-        return fileList;
-    }
+					}
+					println("LsCommand line : " + line);
 
-    class LsReceiver extends MultiLineReceiver {
+					fileList.add(line);
+				}
+			}
+		}
 
-        @Override
-        public void processNewLines(String[] lines) {
-            for (String line : lines) {
-                if (line != null && line.length() > 0) {
-                    if (line.contains("No such file or directory")) {
-                        break;
-                    } else if (line.contains("failed")) {
-                        break;
-
-                    }
-                    println("LsCommand line : " + line);
-
-                    fileList.add(line);
-
-                }
-            }
-        }
-
-        @Override
-        public boolean isCancelled() {
-            return false;
-        }
-    }
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+	}
 }
