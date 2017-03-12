@@ -58,9 +58,9 @@ A:通过修改genymotion 尝试设置adb 位置.
 #Feature:
 1. 本地日志记录.
 * 优化选择文件体验.   
-
-
-
+* 开启traceview.  
+* 开启Systrace.  
+* 开启电量分析.  
 
 #特别鸣谢:
 [adb-idea](https://github.com/pbreault/adb-idea)  
