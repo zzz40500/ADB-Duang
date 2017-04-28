@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * Created by dim on 16/3/31.
  */
-public class PushCommand
-	extends Command {
+public class PushCommand extends Command {
 
 	private final DeviceResult deviceResult;
 	private final String localFilePath;
@@ -41,7 +40,6 @@ public class PushCommand
 		if (result1.contains(new File(localFilePath).getName())) {
 			return true;
 		}
-
 		return false;
 	}
 }

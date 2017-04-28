@@ -1,16 +1,11 @@
 package com.dim.ui;
 
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.util.SystemInfo;
-import com.intellij.refactoring.util.duplicates.Match;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
@@ -29,8 +24,6 @@ public class ChooserListFileDialog extends DialogWrapper {
         for (String file : fileList) {
             fileListComboBox1.addItem(file);
         }
-
-
         init();
         contentPane.requestFocus(true);
         contentPane.registerKeyboardAction(new ActionListener() {

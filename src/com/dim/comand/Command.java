@@ -10,11 +10,10 @@ import static com.dim.utils.Logger.println;
  */
 public abstract class Command<T> {
 
-
     public abstract boolean run();
 
-
     public String executeCommand(String command) {
+        println(command);
         String result = null;
         try {
             Process exec = Runtime.getRuntime().exec(command);

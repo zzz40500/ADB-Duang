@@ -1,6 +1,7 @@
 package com.dim.ui;
 
 import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 
@@ -20,6 +21,14 @@ public class NotificationHelper {
 		                                             notificationType);
 		Notifications.Bus.notify(notification);
 	}
+	public static void sendNotification(String message, NotificationType notificationType, NotificationListener notificationListener) {
+		Notification notification = new Notification("com.dim.plugin.adbduang",
+				"ADB Duang ",
+				espaceString(message),
+				notificationType,notificationListener);
+		Notifications.Bus.notify(notification);
+	}
+
 
 
 	private static String espaceString(String string) {

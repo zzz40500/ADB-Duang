@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.dim.plugin.adbduang</id>
     <name>ADB Duang</name>
-    <version>0.3</version>
+    <version>0.4</version>
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
@@ -69,8 +69,17 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
                 description="push file to device">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
+        <action id="com.dim.action.EditDbAction"
+                class="com.dim.action.EditDbAction"
+                text="Edit Database"
+                description="Edit Database">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </action>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="ADB-Duang" secondary="true" anchor="right"
+                    factoryClass="com.dim.ui.WindowTool">
+        </toolWindow>
     </extensions>
 
 

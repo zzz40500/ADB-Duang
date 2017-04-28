@@ -92,8 +92,6 @@ public abstract class BaseAction extends AnAction {
                 }
             }
             String packageName =facet.getAndroidModuleInfo().getPackage();
-//            String packageName = "com.xingin.xhs";
-
             AndroidDebugBridge bridge = AndroidSdkUtils.getDebugBridge(anActionEvent.getProject());
             if (bridge == null) {
                 error("No platform configured");
@@ -149,6 +147,5 @@ public abstract class BaseAction extends AnAction {
 
         return new DeviceResult(anActionEvent, selectedDevices[0], facet, packageName);
     }
-
 
 }
