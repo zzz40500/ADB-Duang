@@ -40,10 +40,6 @@ public abstract class BaseAction extends AnAction {
         } else if (deviceResult.device == null) {
             //没设备
             error(" no device ");
-        } else if (IdeSdks.getAndroidSdkPath() == null) {
-
-            error("android sdk is null ");
-
         } else {
             if (runEnable(anActionEvent)) {
                 run(deviceResult, anActionEvent);

@@ -22,7 +22,9 @@
                 <preferred-size width="342" height="26"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <model/>
+            </properties>
           </component>
         </children>
       </grid>

@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.dim.plugin.adbduang</id>
     <name>ADB Duang</name>
-    <version>0.4</version>
+    <version>0.6</version>
     <vendor email="wyh405003836@126.com">zzz40500</vendor>
     <description>
         <![CDATA[
@@ -12,6 +12,11 @@ For more details, look at the repo on GitHub:<a href="https://github.com/zzz4050
       ]]>
     </description>
     <change-notes><![CDATA[
+     <b>0.6</b>
+         <ul>
+            <li> support develop setting</li>
+            <li>support third anaction </li>
+        </ul>
         <b>0.2</b>
         <ul>
             <li> fix : push command doesn't work on 6.0</li>

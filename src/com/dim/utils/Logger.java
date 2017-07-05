@@ -6,7 +6,7 @@ package com.dim.utils;
  */
 public class Logger {
 
-    private static boolean debug = false;
+    private static boolean debug = true;
 
     public static void println(String message) {
         if (debug) {
